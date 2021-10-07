@@ -147,14 +147,14 @@ $this->order->save();
 
 For the question given:
 ```sql
-SELECT COUNT(DISTINCT `Orders`.Order_ID),SUM(IF(`Orders`.Sales_Type = 'Normal',`Orders_Products`.`Normal_Price`,`Orders_Products`.`Promotional_Price`))
+SELECT COUNT(DISTINCT `Orders`.Order_ID) as Number_Of_Order,SUM(IF(`Orders`.Sales_Type = 'Normal',`Orders_Products`.`Normal_Price`,`Orders_Products`.`Promotional_Price`)) as Total_Sales_Amount
 FROM `Orders`
 inner join `Orders_Products` on `Orders`.Order_ID = `Orders_Products`.Order_ID
 ```
 For the schema I generated
 
 ```sql
-SELECT COUNT(DISTINCT `orders`.id),SUM(IF(`orders`.type = 'normal',`products`.`normal_price`,`products`.`promotional_price`))
+SELECT COUNT(DISTINCT `orders`.id) as Number_Of_Order,SUM(IF(`orders`.type = 'normal',`products`.`normal_price`,`products`.`promotional_price`)) as Total_Sales_Amount
 FROM `orders`
 inner join `order_product` on `orders`.id = `order_product`.order_id
 inner join `products` on `products`.id = `order_product`.product_id
