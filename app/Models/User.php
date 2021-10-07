@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +37,33 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $extends = [
+        'active_order',
+        'reward',
+        'active_points'
+    ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+    public function points()
+    {
+        return $this->hasMany(Point::class);
+    }
+    public function getActiveOrderAttribute()
+    {
+        $orders = $this->orders->filter(function($order) {
+            return !$order->completed;
+        });
+        return $orders->count() ? $orders->first() : NULL;
+    }
+    public function getActivePointsAttribute()
+    {
+        $points = $this->points->where('available','!=',0)->where('expires_at','>',now());
+        return $points;
+    }
+    public function getRewardAttribute()
+    {
+        return $this->active_points->count() ? $this->active_points->sum('available') : 0;
+    }
 }

@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Livewire\AllOrders;
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\MakeOrder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', MakeOrder::class)->name('home');
 });
