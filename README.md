@@ -159,3 +159,14 @@ FROM `orders`
 inner join `order_product` on `orders`.id = `order_product`.order_id
 inner join `products` on `products`.id = `order_product`.product_id
 ```
+
+## Question 3 
+
+Total New Amount will be MYR 4.72 with MYR 0.28 GST
+
+```php
+    $gstPercentage = 6; // Given GST percentage 6%
+    $includedAmount = 5.00; // Given GST Included amopunt MYR 5.00
+    $netAmount = round($includedAmount*100/(100+$gstPercentage),2); // Net Amount excluding GST = 4.72
+    $gstAmount = $includedAmount-$netAmount; // GST Amount = 0.28
+```
