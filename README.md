@@ -1,5 +1,7 @@
 # Point System
 
+## Question 1
+
 This is a test question given to solve for the PHP Developer role.
 
 ## Database Details
@@ -139,4 +141,21 @@ auth()->user()->points()->create([
 $this->order->completed = true;
 $this->order->received = $this->totalWithDiscount;
 $this->order->save();
+```
+
+## Question 2
+
+For the question given:
+```sql
+SELECT COUNT(DISTINCT `Orders`.Order_ID),SUM(IF(`Orders`.Sales_Type = 'Normal',`Orders_Products`.`Normal_Price`,`Orders_Products`.`Promotional_Price`))
+FROM `Orders`
+inner join `Orders_Products` on `Orders`.Order_ID = `Orders_Products`.Order_ID
+```
+For the schema I generated
+
+```sql
+SELECT COUNT(DISTINCT `orders`.id),SUM(IF(`orders`.type = 'normal',`products`.`normal_price`,`products`.`promotional_price`))
+FROM `orders`
+inner join `order_product` on `orders`.id = `order_product`.order_id
+inner join `products` on `products`.id = `order_product`.product_id
 ```
